@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--ALWAYS CHECK IF THE NAMESPACE IS CORRECT! (Same package name as BoardMapper) -->
+<mapper namespace="org.zerock.ex00.mappers.BoardMapper">
+<!--    Notice how the "id" attribute is same as the method name?-->
+    <select id="getList" resultType="BoardVO">
+        SELECT * FROM tbl_board where bno > 0 order by bno desc
+    </select>
+
+<!--    Notice how the "id" attribute is same as the method name?-->
+    <insert id="insert">
+        insert into tbl_board (title, content, writer)
+        values (#{title}, #{content}, #{writer}) <!-- <- No semicolons! !-->
+    </insert>
+
+</mapper>
