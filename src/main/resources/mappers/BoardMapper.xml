@@ -10,8 +10,34 @@
 
 <!--    Notice how the "id" attribute is same as the method name?-->
     <insert id="insert">
-        insert into tbl_board (title, content, writer)
-        values (#{title}, #{content}, #{writer}) <!-- <- No semicolons! !-->
+
+<!--        1. <selectKey> literally selects the key.
+            "order" attribute dictates when the SQL statement in <selectKey> will be executed
+            either "AFTER" the main <insert> or "BEFORE" the main statement.-->
+
+<!--        2. "keyProperty" attribute maps the key name that is being selected in the <selectKey>.
+            It can also be re-used in the main SQL statement -->
+
+<!--        3. "resultType" specifies the data type of the Result-->
+
+        <selectKey order="AFTER" keyProperty="bno" resultType="Long">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+
+        INSERT INTO tbl_board (title, content, writer)
+        VALUES (#{title}, #{content}, #{writer}) <!-- <- No semicolons required! !-->
     </insert>
+
+    <select id="select" resultType="BoardVO">
+        SELECT * FROM tbl_board WHERE bno = #{bno}
+    </select>
+
+    <update id="update">
+        UPDATE tbl_board
+        SET title = #{title},
+            content = #{content},
+            updateDate = now()
+        WHERE bno = #{bno}
+    </update>
 
 </mapper>

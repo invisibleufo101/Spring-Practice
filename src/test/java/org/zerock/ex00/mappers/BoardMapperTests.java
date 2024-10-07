@@ -29,6 +29,15 @@ public class BoardMapperTests {
     }
 
     @Test
+    public void testSelect(){
+        Long bno = 5L;
+
+        log.info("testSelect\n------------------");
+        BoardVO board = boardMapper.select(bno);
+        log.info(board);
+    }
+
+    @Test
     public void testInsert(){
         BoardVO boardVO = new BoardVO();
         boardVO.setTitle("Test Title");
@@ -37,5 +46,22 @@ public class BoardMapperTests {
 
         log.info("COUNT: " + boardMapper.insert(boardVO));
         log.info("BNO: " + boardVO.getBno());
+    }
+
+    @Test
+    public void testUpdate(){
+        log.info("testUpdate\n-------------");
+
+        String title = "Update Title 2";
+        String content = "Update Content 2";
+        Long bno = 5L;
+
+        BoardVO board = new BoardVO();
+        board.setTitle(title);
+        board.setContent(content);
+        board.setBno(bno);
+
+        int check = boardMapper.update(board);
+        log.info("Update check:" + check);
     }
 }
