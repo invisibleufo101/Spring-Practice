@@ -40,7 +40,7 @@ public class BoardController {
 
     @GetMapping("/register")
     public void register(){
-        log.info("register\n.......");
+//        boardService
     }
 
     @PostMapping("/register")
@@ -50,6 +50,7 @@ public class BoardController {
         long bno = boardService.register(board);
         rttr.addFlashAttribute("result", bno);
 
+        // PRG Pattern (Post-Redirect-Get) : To prevent duplicate form submissions
         return "redirect:/board/list";
     }
 
