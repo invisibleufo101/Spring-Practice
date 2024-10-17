@@ -9,4 +9,5 @@ public interface BoardMapper {
     BoardVO select(Long bno);
     int insert(BoardVO board);
     int update(BoardVO BoardVO);
+    int delete(BoardVO BoardVO);
 }

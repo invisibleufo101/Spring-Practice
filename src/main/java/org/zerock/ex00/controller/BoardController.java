@@ -35,6 +35,10 @@ public class BoardController {
         BoardVO board = boardService.get(bno);
         model.addAttribute("board", board);
 
+        if (!job.equals("read") && !job.equals("modify")){
+            throw new RuntimeException("Bad Request");
+        }
+
         return "board/" + job;
     }
 
@@ -51,6 +55,39 @@ public class BoardController {
         rttr.addFlashAttribute("result", bno);
 
         // PRG Pattern (Post-Redirect-Get) : To prevent duplicate form submissions
+        return "redirect:/board/list";
+    }
+
+
+    @PostMapping("/modify/{bno}")
+    public String modify(@PathVariable("bno") Long bno, BoardVO board){
+        log.info("modify\n---------------");
+        // Making sure the Board post that we're modifying is really the post that we're trying to modify
+        board.setBno(bno);
+
+        log.info("BoardVO: " + board);
+        boardService.modify(board);
+
+        // PRG (Post-Redirect-Get)
+        return "redirect:/board/read/" + bno;
+    }
+
+    @PostMapping("/delete/{bno}")
+    public String delete(@PathVariable("bno") Long bno, RedirectAttributes rttr){
+        log.info("delete\n-------------");
+        BoardVO board = new BoardVO();
+        board.setBno(bno);
+        board.setTitle("해당 글은 삭제 되었습니다.");
+        board.setContent("해당 글은 삭제 되었습니다.");
+        board.setWriter("삭제");
+
+        log.info("BoardVO: " + board);
+        boardService.modify(board);
+
+//        log.info("BoardVO: " + board);
+//        boardService.delete(board);
+
+        // PRG (Post-Redirect-Get)
         return "redirect:/board/list";
     }
 

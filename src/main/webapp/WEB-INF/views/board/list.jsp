@@ -36,9 +36,9 @@
                     <th>Update</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbody">
                 <c:forEach var="board" items="${boards}">
-                <tr>
+                <tr data-bno="${board.bno}">
                     <td><c:out value="${ board.bno }" /></td>
                     <td><c:out value="${ board.title }" /></td>
                     <td><c:out value="${ board.writer }" /></td>
@@ -62,17 +62,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">시스템 메세지</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p></p>
+                    <p>글이 정상적으로 등록되었습니다.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">확인</button>
+<%--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
                 </div>
             </div>
         </div>
@@ -81,12 +81,21 @@
 
 <%@include file="../includes/footer.jsp"%>
 <script>
+    // result -> whether a new Post has been registered or not
     const result = '${result}';
     const myModal = new bootstrap.Modal(document.getElementById("myModal"));
 
+    // if new Post has been registered, show Modal message
     if (result){
         myModal.show();
     }
+
+    // When clicking on the table row...
+    document.querySelector('.tbody').addEventListener('click', (e) => {
+        const tableRow = e.target.closest('tr'); // select the row's closest parent el (in this case <tr>)
+        const bno = tableRow.dataset.bno; // the row's PK
+        window.location = `/board/read/\${bno}`; // direct the user to the corresponding Board post with that bno
+    }, false);
 
 </script>
 <%@include file="../includes/end.jsp"%>

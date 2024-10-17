@@ -39,6 +39,6 @@ public class BoardService {
     }
 
     public boolean delete(BoardVO board){
-        return false;
+        return boardMapper.delete(board) == 1;
     }
 }
