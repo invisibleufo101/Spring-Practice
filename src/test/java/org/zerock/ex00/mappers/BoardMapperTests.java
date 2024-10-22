@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.zerock.ex00.domain.BoardVO;
+import org.zerock.ex00.domain.Criteria;
+
+import java.util.List;
 
 @Log4j2
 @ExtendWith(SpringExtension.class)
@@ -25,7 +28,16 @@ public class BoardMapperTests {
     // Testing BoardMapper's getList()
     @Test
     public void testList(){
-        boardMapper.getList().forEach(boardVO -> log.info(boardVO));
+        boardMapper.getList().forEach(log::info);
+    }
+
+    @Test
+    public void testPage(){
+        log.info("testPage\n------");
+        Criteria pageCriteria = new Criteria();
+        List<BoardVO> list = boardMapper.getPage(pageCriteria);
+
+        list.forEach(log::info);
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.ex00.domain.BoardVO;
+import org.zerock.ex00.domain.Criteria;
 import org.zerock.ex00.service.BoardService;
 
 import java.util.List;
@@ -20,9 +21,12 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/list")
-    public void list(Model model){
+    public void list(@ModelAttribute("criteria") Criteria pageCriteria, Model model){
         log.info("list");
-        List<BoardVO> boards = boardService.list();
+        List<BoardVO> boards = boardService.getList(pageCriteria);
+
+        log.info(boards);
+
         model.addAttribute("boards", boards);
     }
 

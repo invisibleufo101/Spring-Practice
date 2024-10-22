@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.ex00.domain.BoardVO;
+import org.zerock.ex00.domain.Criteria;
 import org.zerock.ex00.mappers.BoardMapper;
 
 import java.util.List;
@@ -30,6 +31,9 @@ public class BoardService {
         return boardMapper.getList();
     }
 
+    public List<BoardVO> getList(Criteria pageCriteria){
+        return boardMapper.getPage(pageCriteria);
+    }
     public BoardVO get(Long bno){
         return boardMapper.select(bno);
     }

@@ -32,6 +32,14 @@
         SELECT * FROM tbl_board WHERE bno = #{bno}
     </select>
 
+    <select id="getPage" resultType="BoardVO">
+        SELECT *
+        FROM tbl_board
+        WHERE bno > 0
+        ORDER BY bno DESC
+        limit #{skip}, #{amount}
+    </select>
+
     <update id="update">
         UPDATE tbl_board
         SET title = #{title},
