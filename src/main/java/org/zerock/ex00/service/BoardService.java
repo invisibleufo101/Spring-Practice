@@ -34,6 +34,10 @@ public class BoardService {
     public List<BoardVO> getList(Criteria pageCriteria){
         return boardMapper.getPage(pageCriteria);
     }
+
+    public int getTotal(Criteria criteria){
+        return boardMapper.getTotal(criteria);
+    }
     public BoardVO get(Long bno){
         return boardMapper.select(bno);
     }

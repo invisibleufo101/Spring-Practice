@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.ex00.domain.BoardVO;
 import org.zerock.ex00.domain.Criteria;
+import org.zerock.ex00.domain.PageDTO;
 import org.zerock.ex00.service.BoardService;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public class BoardController {
         log.info(boards);
 
         model.addAttribute("boards", boards);
+
+        PageDTO pageDTO = new PageDTO(pageCriteria, boardService.getTotal(pageCriteria));
+        model.addAttribute("pageMaker", pageDTO);
     }
 
     @GetMapping({"/{job}/{bno}", })

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: tonyha
-  Date: 2024-10-07
-  Time: 4:20 p.m.
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../includes/header.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -26,9 +19,6 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-
-            ${criteria}
-            
             <table class="table table-bordered" id="dataTable">
                 <thead>
                 <tr>
@@ -51,6 +41,28 @@
                 </c:forEach>
                 </tbody>
             </table>
+                <!-- Pagingnation -->
+                <nav aria-label="pagination">
+                    <ul class="pagination">
+                        <c:if test="${pageMaker.prev}">
+                        <li class="page-item">
+                            <a id="jumpPrev" class="page-link"><<</a>
+                        </li>
+                        </c:if>
+                        <c:forEach var="page" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                        <li class="page-item ${criteria.pageNum == page ? 'active' : ''}">
+                            <a class="page-link" href="?pageNum=${page}">${page}</a>
+                        </li>
+                        </c:forEach>
+
+                        <c:if test="${pageMaker.next}">
+                        <li class="page-item">
+                            <a id="jumpNext" class="page-link">>></a>
+                        </li>
+                        </c:if>
+                    </ul>
+                </nav>
+                <!-- //Pagingnation -->
         </div>
     </div>
 
@@ -75,7 +87,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary">확인</button>
-<%--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
                 </div>
             </div>
         </div>
@@ -99,6 +110,19 @@
         const bno = tableRow.dataset.bno; // the row's PK
         window.location = `/board/read/\${bno}`; // direct the user to the corresponding Board post with that bno
     }, false);
+
+
+    const pageNum = '${criteria.pageNum}';
+    const jumpPrevBtn = document.querySelector('#jumpPrev');
+    const jumpNextBtn = document.querySelector('#jumpNext');
+
+    // jumpPrevBtn.addEventListener("click", (e) => {
+    //
+    // });
+    //
+    // jumpNextBtn.addEventListener("click", (e) => {
+    //
+    // });
 
 </script>
 <%@include file="../includes/end.jsp"%>
